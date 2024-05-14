@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kids_chore_app/core/routes/routes_config.dart';
 
 class Landing extends StatelessWidget {
   const Landing({super.key});
@@ -30,7 +32,8 @@ class Landing extends StatelessWidget {
                 SizedBox(
                   width: double.maxFinite,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        context.push(RoutesConfig.login, extra: true),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
                     ),
@@ -43,7 +46,8 @@ class Landing extends StatelessWidget {
                 SizedBox(
                   width: double.maxFinite,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        context.push(RoutesConfig.login, extra: false),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
                     ),
