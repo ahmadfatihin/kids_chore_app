@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AddTaskForm extends StatefulWidget {
   final Function(String) onAddTask;
 
-  AddTaskForm({required this.onAddTask});
+  const AddTaskForm({required this.onAddTask});
 
   @override
   _AddTaskFormState createState() => _AddTaskFormState();
@@ -27,7 +27,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
         bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
       ),
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
@@ -35,7 +35,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
             children: [
               TextFormField(
                 controller: _taskController,
-                decoration: InputDecoration(labelText: 'Task'),
+                decoration: const InputDecoration(labelText: 'Task'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a task';
@@ -43,10 +43,10 @@ class _AddTaskFormState extends State<AddTaskForm> {
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _submit,
-                child: Text('Add Task'),
+                child: const Text('Add Task'),
               ),
             ],
           ),

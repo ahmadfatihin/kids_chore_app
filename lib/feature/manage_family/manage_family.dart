@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/routes/routes_config.dart';
@@ -15,7 +12,7 @@ class ManageFamily extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
         body: Column(
           children: [
@@ -25,21 +22,21 @@ class ManageFamily extends StatelessWidget {
                 context.push(RoutesConfig.task);
               },
               child: Card(
-                color: Color(0xFFFFF2C2),
+                color: const Color(0xFFFFF2C2),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: Row(
+                child: const Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: CircleAvatar(
                         backgroundImage:
                             AssetImage('assets/images/barcode.png'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12),
+                      padding: EdgeInsets.all(12),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

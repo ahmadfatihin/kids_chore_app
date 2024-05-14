@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kids_chore_app/feature/todo/task_form.dart';
 
@@ -8,7 +7,7 @@ import '../../core/hive_service.dart';
 class TaskScreen extends StatefulWidget {
   final bool showFab;
 
-  TaskScreen({required this.showFab});
+  const TaskScreen({required this.showFab});
 
   @override
   _TaskScreenState createState() => _TaskScreenState();
@@ -62,8 +61,8 @@ class _TaskScreenState extends State<TaskScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset('assets/images/full.png'),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, top: 4),
+          const Padding(
+            padding: EdgeInsets.only(left: 10, top: 4),
             child: Text("Today", style: TextStyle(fontSize: 20)),
           ),
           Expanded(
@@ -79,7 +78,7 @@ class _TaskScreenState extends State<TaskScreen> {
       floatingActionButton: widget.showFab
           ? FloatingActionButton(
               onPressed: _showAddTaskForm,
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             )
           : null,
     );
@@ -89,14 +88,14 @@ class _TaskScreenState extends State<TaskScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: Card(
-        color: Color(0xFFFFF2C2),
+        color: const Color(0xFFFFF2C2),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: ListTile(
           title: Text("${index + 1}. ${tasks[index]}"),
           trailing: IconButton(
-            icon: Icon(Icons.check_box_outlined),
+            icon: const Icon(Icons.check_box_outlined),
             onPressed: () {
               _deleteTask(index);
             },
