@@ -63,7 +63,7 @@ class _TaskScreenState extends State<TaskScreen> {
         children: [
           Image.asset('assets/images/full.png'),
           Padding(
-            padding: const EdgeInsets.only(left: 10),
+            padding: const EdgeInsets.only(left: 10, top: 4),
             child: Text("Today", style: TextStyle(fontSize: 20)),
           ),
           Expanded(
@@ -94,7 +94,7 @@ class _TaskScreenState extends State<TaskScreen> {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: ListTile(
-          title: Text(tasks[index]),
+          title: Text("${index + 1}. ${tasks[index]}"),
           trailing: IconButton(
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
