@@ -29,7 +29,7 @@ class ManageFamily extends StatelessWidget {
                 child: const Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.only(top: 8.0, left: 16),
                       child: CircleAvatar(
                         backgroundImage:
                             AssetImage('assets/images/barcode.png'),
