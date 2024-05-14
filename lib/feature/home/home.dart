@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 
 class Home extends StatelessWidget {
@@ -33,7 +29,7 @@ class KidsHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [],
     );
   }
@@ -107,7 +103,7 @@ class ParentHome extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Row(
             children: [
               Flexible(
@@ -120,8 +116,8 @@ class ParentHome extends StatelessWidget {
                   child: Row(
                     children: [
                       Image.asset('assets/images/family.png'),
-                      SizedBox(width: 10),
-                      Flexible(
+                      const SizedBox(width: 10),
+                      const Flexible(
                         child: Text(
                           'Manage your family',
                           style: TextStyle(fontSize: 16),
@@ -131,7 +127,7 @@ class ParentHome extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 15),
+              const SizedBox(width: 15),
               Flexible(
                 child: Container(
                   padding: const EdgeInsets.all(10),
@@ -142,8 +138,8 @@ class ParentHome extends StatelessWidget {
                   child: Row(
                     children: [
                       Image.asset('assets/images/podium.png'),
-                      SizedBox(width: 10),
-                      Flexible(
+                      const SizedBox(width: 10),
+                      const Flexible(
                         child: Text(
                           'Track child progress',
                           style: TextStyle(fontSize: 16),
@@ -155,7 +151,7 @@ class ParentHome extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Row(
             children: [
               Flexible(
@@ -169,8 +165,8 @@ class ParentHome extends StatelessWidget {
                   child: Row(
                     children: [
                       Image.asset('assets/images/gift.png'),
-                      SizedBox(width: 10),
-                      Flexible(
+                      const SizedBox(width: 10),
+                      const Flexible(
                         child: Text(
                           'Manage Rewards',
                           style: TextStyle(fontSize: 16),
@@ -180,7 +176,7 @@ class ParentHome extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 15),
+              const SizedBox(width: 15),
               Flexible(
                 flex: 3,
                 child: Container(
@@ -192,8 +188,8 @@ class ParentHome extends StatelessWidget {
                   child: Row(
                     children: [
                       Image.asset('assets/images/clock.png'),
-                      SizedBox(width: 10),
-                      Flexible(
+                      const SizedBox(width: 10),
+                      const Flexible(
                         child: Text(
                           'History',
                           style: TextStyle(fontSize: 16),
