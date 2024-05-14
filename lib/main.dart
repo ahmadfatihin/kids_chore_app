@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:kids_chore_app/core/di/injector.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('com.wolkk.combase_customer_project');
+
+  await configureDependencies();
   runApp(const MyApp());
 }
 
