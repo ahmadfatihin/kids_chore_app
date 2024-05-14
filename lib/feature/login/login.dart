@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kids_chore_app/core/routes/routes_config.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Login extends StatelessWidget {
   final bool parent;
@@ -21,58 +22,92 @@ class Login extends StatelessWidget {
   }
 }
 
-class KidsLogin extends StatelessWidget {
+class KidsLogin extends StatefulWidget {
   const KidsLogin({super.key});
 
   @override
+  _KidsLoginState createState() => _KidsLoginState();
+}
+
+class _KidsLoginState extends State<KidsLogin> {
+  bool _isLoading = false;
+
+  void _navigateWithDelay(String route, {required bool showFab}) {
+    setState(() {
+      _isLoading = true;
+    });
+
+    Future.delayed(const Duration(seconds: 5), () {
+      setState(() {
+        _isLoading = false;
+      });
+      context.push(route, extra: showFab);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      padding: const EdgeInsets.all(25),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            'Welcome',
-            style: TextStyle(fontSize: 32),
+    return Stack(
+      children: [
+        Container(
+          width: double.maxFinite,
+          padding: const EdgeInsets.all(25),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Welcome',
+                style: TextStyle(fontSize: 32),
+              ),
+              const Text(
+                'Buddy!',
+                style: TextStyle(fontSize: 64),
+              ),
+              const Text(
+                'Please scan with parent account, at Children Options > Scan and will be automatically login.',
+                textAlign: TextAlign.center,
+              ),
+              Container(
+                padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: const Color.fromRGBO(155, 195, 255, 1), width: 2),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
+                child: GestureDetector(
+                    onTap: () =>
+                        _navigateWithDelay(RoutesConfig.task, showFab: false),
+                    child: Image.asset('assets/images/barcode.png')),
+              ),
+              SizedBox(
+                width: double.maxFinite,
+                child: ElevatedButton(
+                  onPressed: () =>
+                      _navigateWithDelay(RoutesConfig.home, showFab: false),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
+                  ),
+                  child: const Text(
+                    'Refresh',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
           ),
-          const Text(
-            'Buddy!',
-            style: TextStyle(fontSize: 64),
-          ),
-          const Text(
-            'Please scan with parent account, at Children Options > Scan and will be automatically login.',
-            textAlign: TextAlign.center,
-          ),
+        ),
+        if (_isLoading)
           Container(
-            padding: const EdgeInsets.all(20),
-            margin: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              border: Border.all(
-                  color: const Color.fromRGBO(155, 195, 255, 1), width: 2),
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-            ),
-            child: GestureDetector(
-                onTap: () {
-                  context.push(RoutesConfig.task, extra: false);
-                },
-                child: Image.asset('assets/images/barcode.png')),
-          ),
-          SizedBox(
-            width: double.maxFinite,
-            child: ElevatedButton(
-              onPressed: () => context.go(RoutesConfig.home, extra: false),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
-              ),
-              child: const Text(
-                'Refresh',
-                style: TextStyle(color: Colors.white),
+            color: Colors.black54,
+            child: Center(
+              child: LoadingAnimationWidget.inkDrop(
+                color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
+                size: 100,
               ),
             ),
           ),
-        ],
-      ),
+      ],
     );
   }
 }
@@ -131,7 +166,7 @@ class ParentLogin extends StatelessWidget {
           SizedBox(
             width: double.maxFinite,
             child: ElevatedButton(
-              onPressed: () => context.go(RoutesConfig.home, extra: true),
+              onPressed: () => context.push(RoutesConfig.home, extra: true),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
               ),

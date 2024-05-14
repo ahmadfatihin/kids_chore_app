@@ -23,10 +23,6 @@ class Landing extends StatelessWidget {
               style: TextStyle(fontSize: 20),
             ),
             Image.asset('assets/images/ilus_1.png'),
-            const Text(
-              'Kids Chores',
-              style: TextStyle(fontSize: 48),
-            ),
             Column(
               children: [
                 SizedBox(

@@ -40,11 +40,11 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 
   void _deleteTask(int index) async {
+    _showRewardDialog();
     setState(() {
       tasks.removeAt(index);
     });
     await _hiveService.put('tasks', tasks);
-    _showRewardDialog();
   }
 
   void _showRewardDialog() {
