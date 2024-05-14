@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kids_chore_app/core/routes/routes_config.dart';
-import 'package:kids_chore_app/feature/home/home.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
