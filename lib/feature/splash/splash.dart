@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kids_chore_app/core/routes/routes_config.dart';
 import 'package:kids_chore_app/feature/home/home.dart';
 
 class Splash extends StatefulWidget {
@@ -15,9 +17,8 @@ class _SplashState extends State<Splash> {
 
     Future.delayed(
         const Duration(seconds: 2),
-        () => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const Home()),
+        () => context.push(
+              RoutesConfig.task,
             ));
   }
 
