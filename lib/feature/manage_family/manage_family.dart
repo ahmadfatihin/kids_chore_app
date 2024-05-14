@@ -1,4 +1,10 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../core/routes/routes_config.dart';
 
 class ManageFamily extends StatelessWidget {
   const ManageFamily({super.key});
@@ -14,18 +20,48 @@ class ManageFamily extends StatelessWidget {
         body: Column(
           children: [
             Image.asset('assets/images/manage_family.png'),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'List',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                  ),
-                ],
+            GestureDetector(
+              onTap: () {
+                context.push(RoutesConfig.task);
+              },
+              child: Card(
+                color: Color(0xFFFFF2C2),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        backgroundImage:
+                            AssetImage('assets/images/barcode.png'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Gifhary Shidqa Halim",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.male),
+                              Text("22.12.2022"),
+                            ],
+                          ),
+                          Text("Third child")
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            )
+            ),
           ],
         ));
   }
