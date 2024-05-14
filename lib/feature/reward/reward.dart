@@ -18,7 +18,7 @@ class RewardScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,16 +38,16 @@ class RewardScreen extends StatelessWidget {
                   children: List.generate(
                     list.length,
                     (index) => Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      padding: EdgeInsets.all(15),
+                      margin: const EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: Color.fromRGBO(255, 242, 194, 0.7),
+                        color: const Color.fromRGBO(255, 242, 194, 0.7),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(
                         children: [
                           Text('${index + 1}.'),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Text(list[index]),
                         ],
                       ),
