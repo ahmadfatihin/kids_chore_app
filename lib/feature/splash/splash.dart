@@ -14,16 +14,29 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 2),
-        () => context.pushReplacement(RoutesConfig.home));
+    Future.delayed(const Duration(milliseconds: 2500),
+        () => context.pushReplacement(RoutesConfig.landing));
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.grey,
+    return Scaffold(
+      backgroundColor: const Color.fromRGBO(255, 237, 213, 1),
       body: Center(
-        child: Text('Welcome to the Splash Screen!'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/kids.png'),
+            const Text(
+              'Kids Chores',
+              style: TextStyle(fontSize: 48),
+            ),
+            const Text(
+              'Bringing Family Closer',
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
       ),
     );
   }
