@@ -44,7 +44,7 @@ class ParentHome extends StatelessWidget {
       padding: const EdgeInsets.all(25),
       child: Column(
         children: [
-          Row(
+          const Row(
             children: [
               Text(
                 'Hi, Parent',
@@ -52,7 +52,7 @@ class ParentHome extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 50),
+          const SizedBox(height: 50),
           Text(
             DateFormat('dd MMMM yyyy').format(DateTime.now()),
             style: const TextStyle(fontSize: 32),
