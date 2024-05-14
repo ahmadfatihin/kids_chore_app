@@ -9,7 +9,7 @@ class RoutesConfig {
       builder: (ctx, state) => const Splash(),
     ),
     GoRoute(
-      path: splash,
+      path: home,
       builder: (ctx, state) => const Home(),
     ),
   ]);
