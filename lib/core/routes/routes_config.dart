@@ -25,7 +25,10 @@ class RoutesConfig {
     ),
     GoRoute(
       path: home,
-      builder: (ctx, state) => const Home(),
+      builder: (ctx, state) {
+        final parent = state.extra as bool;
+        return Home(parent: parent);
+      },
     ),
     GoRoute(
       path: manageFamily,

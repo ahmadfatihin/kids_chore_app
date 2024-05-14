@@ -32,25 +32,25 @@ class KidsLogin extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             'Welcome',
             style: TextStyle(fontSize: 32),
           ),
-          Text(
+          const Text(
             'Buddy!',
             style: TextStyle(fontSize: 64),
           ),
-          Text(
+          const Text(
             'Please scan with parent account, at Children Options > Scan and will be automatically login.',
             textAlign: TextAlign.center,
           ),
           Container(
-            padding: EdgeInsets.all(20),
-            margin: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              border:
-                  Border.all(color: Color.fromRGBO(155, 195, 255, 1), width: 2),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              border: Border.all(
+                  color: const Color.fromRGBO(155, 195, 255, 1), width: 2),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             child: GestureDetector(
                 onTap: () {
@@ -61,13 +61,11 @@ class KidsLogin extends StatelessWidget {
           SizedBox(
             width: double.maxFinite,
             child: ElevatedButton(
-              onPressed: () {
-                context.push(RoutesConfig.task, extra: false);
-              },
+              onPressed: () => context.go(RoutesConfig.home, extra: false),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromRGBO(155, 195, 255, 1),
+                backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
               ),
-              child: Text(
+              child: const Text(
                 'Refresh',
                 style: TextStyle(color: Colors.white),
               ),
@@ -90,15 +88,15 @@ class ParentLogin extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             'Welcome',
             style: TextStyle(fontSize: 32),
           ),
-          Text(
+          const Text(
             'Parents',
             style: TextStyle(fontSize: 64),
           ),
-          TextField(
+          const TextField(
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               hintText: 'Email',
@@ -107,8 +105,8 @@ class ParentLogin extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10),
-          TextField(
+          const SizedBox(height: 10),
+          const TextField(
             obscureText: true,
             decoration: InputDecoration(
               hintText: 'Password',
@@ -117,8 +115,8 @@ class ParentLogin extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10),
-          Row(
+          const SizedBox(height: 10),
+          const Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
@@ -129,17 +127,15 @@ class ParentLogin extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 25),
+          const SizedBox(height: 25),
           SizedBox(
             width: double.maxFinite,
             child: ElevatedButton(
-              onPressed: () {
-                context.push(RoutesConfig.task);
-              },
+              onPressed: () => context.go(RoutesConfig.home, extra: true),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromRGBO(155, 195, 255, 1),
+                backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
               ),
-              child: Text(
+              child: const Text(
                 'Login as Parent',
                 style: TextStyle(color: Colors.white),
               ),
