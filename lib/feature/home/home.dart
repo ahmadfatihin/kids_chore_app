@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:kids_chore_app/core/routes/routes_config.dart';
 
 class Home extends StatelessWidget {
   final bool parent;
@@ -161,23 +163,26 @@ class ParentHome extends StatelessWidget {
                 children: [
                   Flexible(
                     flex: 5,
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(255, 242, 194, 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Image.asset('assets/images/gift.png'),
-                          const SizedBox(width: 10),
-                          const Flexible(
-                            child: Text(
-                              'Manage Rewards',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          )
-                        ],
+                    child: GestureDetector(
+                      onTap: () => context.push(RoutesConfig.manageReward),
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(255, 242, 194, 1),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset('assets/images/gift.png'),
+                            const SizedBox(width: 10),
+                            const Flexible(
+                              child: Text(
+                                'Manage Rewards',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
