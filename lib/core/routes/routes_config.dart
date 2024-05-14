@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kids_chore_app/feature/home/home.dart';
 import 'package:kids_chore_app/feature/landing/landing.dart';
 import 'package:kids_chore_app/feature/login/login.dart';
+import 'package:kids_chore_app/feature/manage_family/manage_family.dart';
 import 'package:kids_chore_app/feature/splash/splash.dart';
 import 'package:kids_chore_app/feature/todo/todo_screen.dart';
 
@@ -30,6 +31,10 @@ class RoutesConfig {
       },
     ),
     GoRoute(
+      path: manageFamily,
+      builder: (ctx, state) => const ManageFamily(),
+    ),
+    GoRoute(
       path: task,
       builder: (ctx, state) {
         final showFab =
@@ -44,4 +49,5 @@ class RoutesConfig {
   static String login = '/login';
   static String home = '/home';
   static String task = '/task';
+  static String manageFamily = '/manageFamily';
 }
