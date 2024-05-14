@@ -15,7 +15,7 @@ class _SplashState extends State<Splash> {
 
     Future.delayed(
         const Duration(seconds: 2),
-        () => Navigator.push(
+        () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const Home()),
             ));
@@ -24,6 +24,7 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor: Colors.grey,
       body: Center(
         child: Text('Welcome to the Splash Screen!'),
       ),
