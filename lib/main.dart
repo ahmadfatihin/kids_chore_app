@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kids_chore_app/core/di/injector.dart';
 import 'package:kids_chore_app/core/routes/routes_config.dart';
-import 'package:kids_chore_app/feature/splash/splash.dart';
 
 void main() async {
   await Hive.initFlutter();
