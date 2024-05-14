@@ -6,6 +6,10 @@ import 'package:kids_chore_app/feature/todo/task_form.dart';
 import '../../core/hive_service.dart';
 
 class TaskScreen extends StatefulWidget {
+  final bool showFab;
+
+  TaskScreen({required this.showFab});
+
   @override
   _TaskScreenState createState() => _TaskScreenState();
 }
@@ -62,23 +66,22 @@ class _TaskScreenState extends State<TaskScreen> {
             padding: const EdgeInsets.only(left: 10),
             child: Text("Today", style: TextStyle(fontSize: 20)),
           ),
-          SingleChildScrollView(
-            child: Container(
-              height: 340,
-              child: ListView.builder(
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  return _buildTaskTile(index);
-                },
-              ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: tasks.length,
+              itemBuilder: (context, index) {
+                return _buildTaskTile(index);
+              },
             ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showAddTaskForm,
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: widget.showFab
+          ? FloatingActionButton(
+              onPressed: _showAddTaskForm,
+              child: Icon(Icons.add),
+            )
+          : null,
     );
   }
 

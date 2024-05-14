@@ -28,7 +28,11 @@ class RoutesConfig {
     ),
     GoRoute(
       path: task,
-      builder: (ctx, state) => TaskScreen(),
+      builder: (ctx, state) {
+        final showFab =
+            state.extra as bool? ?? true; // Default to true if not provided
+        return TaskScreen(showFab: showFab);
+      },
     ),
   ]);
 
