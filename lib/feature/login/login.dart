@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kids_chore_app/core/routes/routes_config.dart';
 
 class Login extends StatelessWidget {
   final bool parent;
@@ -55,7 +57,7 @@ class KidsLogin extends StatelessWidget {
           SizedBox(
             width: double.maxFinite,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () => context.go(RoutesConfig.home, extra: false),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
               ),
@@ -125,7 +127,7 @@ class ParentLogin extends StatelessWidget {
           SizedBox(
             width: double.maxFinite,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () => context.go(RoutesConfig.home, extra: true),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
               ),
