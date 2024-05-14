@@ -7,7 +7,7 @@ import '../../core/hive_service.dart';
 class TaskScreen extends StatefulWidget {
   final bool showFab;
 
-  const TaskScreen({required this.showFab});
+  const TaskScreen({super.key, required this.showFab});
 
   @override
   _TaskScreenState createState() => _TaskScreenState();
@@ -44,6 +44,27 @@ class _TaskScreenState extends State<TaskScreen> {
       tasks.removeAt(index);
     });
     await _hiveService.put('tasks', tasks);
+    _showRewardDialog();
+  }
+
+  void _showRewardDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Reward!"),
+          content: const Text("Congratulations! You've completed a task."),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _showAddTaskForm() {
