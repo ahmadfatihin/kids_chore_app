@@ -7,7 +7,7 @@ import 'package:kids_chore_app/core/routes/routes_config.dart';
 
 class Home extends StatelessWidget {
   final bool parent;
-  const Home({super.key, required this.parent});
+  const Home({super.key, this.parent = true});
 
   @override
   Widget build(BuildContext context) {
@@ -114,23 +114,26 @@ class ParentHome extends StatelessWidget {
               Row(
                 children: [
                   Flexible(
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(255, 226, 230, 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Image.asset('assets/images/family.png'),
-                          const SizedBox(width: 10),
-                          const Flexible(
-                            child: Text(
-                              'Manage your family',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          )
-                        ],
+                    child: GestureDetector(
+                      onTap: () => context.push(RoutesConfig.manageFamily),
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(255, 226, 230, 1),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset('assets/images/family.png'),
+                            const SizedBox(width: 10),
+                            const Flexible(
+                              child: Text(
+                                'Manage your family',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
