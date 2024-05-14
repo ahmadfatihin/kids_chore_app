@@ -5,7 +5,7 @@ import 'package:kids_chore_app/feature/splash/splash.dart';
 
 void main() async {
   await Hive.initFlutter();
-  await Hive.openBox('com.wolkk.combase_customer_project');
+  await Hive.openBox('com.wolkk.kids_behaviour_app');
 
   await configureDependencies();
   runApp(const MyApp());
