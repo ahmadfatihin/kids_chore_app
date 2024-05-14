@@ -3,6 +3,7 @@ import 'package:kids_chore_app/feature/home/home.dart';
 import 'package:kids_chore_app/feature/landing/landing.dart';
 import 'package:kids_chore_app/feature/login/login.dart';
 import 'package:kids_chore_app/feature/splash/splash.dart';
+import 'package:kids_chore_app/feature/todo/todo_screen.dart';
 
 class RoutesConfig {
   static GoRouter appRouter = GoRouter(initialLocation: splash, routes: [
@@ -28,10 +29,19 @@ class RoutesConfig {
         return Home(parent: parent);
       },
     ),
+    GoRoute(
+      path: task,
+      builder: (ctx, state) {
+        final showFab =
+            state.extra as bool? ?? true; // Default to true if not provided
+        return TaskScreen(showFab: showFab);
+      },
+    ),
   ]);
 
   static String splash = '/splash';
   static String landing = '/landing';
   static String login = '/login';
   static String home = '/home';
+  static String task = '/task';
 }

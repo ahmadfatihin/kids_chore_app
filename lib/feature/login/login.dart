@@ -52,7 +52,11 @@ class KidsLogin extends StatelessWidget {
                   color: const Color.fromRGBO(155, 195, 255, 1), width: 2),
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            child: Image.asset('assets/images/barcode.png'),
+            child: GestureDetector(
+                onTap: () {
+                  context.push(RoutesConfig.task, extra: false);
+                },
+                child: Image.asset('assets/images/barcode.png')),
           ),
           SizedBox(
             width: double.maxFinite,
