@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Home extends StatelessWidget {
   final bool parent;
@@ -7,15 +8,17 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Positioned(
-              top: 0,
-              left: 0,
-              child: Image.asset('assets/images/bg_parent.png')),
-          parent ? const ParentHome() : const KidsHome(),
-        ],
+      body: SafeArea(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+                top: 0,
+                left: 0,
+                child: Image.asset('assets/images/bg_parent.png')),
+            parent ? const ParentHome() : const KidsHome(),
+          ],
+        ),
       ),
     );
   }
@@ -37,8 +40,29 @@ class ParentHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [],
+    return Padding(
+      padding: const EdgeInsets.all(25),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                'Hi, Parent',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
+          SizedBox(height: 50),
+          Text(
+            DateFormat('dd MMMM yyyy').format(DateTime.now()),
+            style: const TextStyle(fontSize: 32),
+          ),
+          Text(
+            DateFormat('hh:mm').format(DateTime.now()),
+            style: const TextStyle(fontSize: 64),
+          ),
+        ],
+      ),
     );
   }
 }
