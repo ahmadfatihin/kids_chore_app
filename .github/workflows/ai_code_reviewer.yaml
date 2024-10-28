@@ -41,6 +41,6 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-          body: |
+          message: |
             🧠 **Automated Review with ChatGPT Suggestions**
             ${{ steps.chatgpt_review.outputs.review_message }}
