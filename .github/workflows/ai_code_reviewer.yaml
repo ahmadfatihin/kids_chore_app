@@ -30,16 +30,16 @@ jobs:
       - name: Run Cohere Review Script
         id: cohere_review
         run: |
-          python3 review_with_cohere.py ${{ env.REPO_NAME }} ${{ env.PR_NUMBER }}
+          python3 review_with_chatgpt.py ${{ env.REPO_NAME }} ${{ env.PR_NUMBER }}
         env:
           COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
 
       - name: Post Cohere Review to Pull Request
-        if: success() && steps.cohere_review.outputs.review_message != ''
+        if: ${{ env.review_message != '' }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           message: |
             🧠 **Automated Review with Cohere Suggestions**
-            ${{ steps.cohere_review.outputs.review_message }}
+            ${{ env.review_message }}
