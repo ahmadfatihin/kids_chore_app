@@ -44,7 +44,7 @@ def review_file(file_path):
         prompt = (
             f"Please review the following Flutter code and provide a concise and clear summary in a single paragraph. "
             f"Focus on readability, common mistakes, and potential improvements. If everything looks good, mention that as well. "
-            f"Keep your response short and in a conversational tone:\n\n{code_content}"
+            f"Keep your response detail with solution and in a conversational tone:\n\n{code_content}"
         )
 
         # Call the Cohere API
