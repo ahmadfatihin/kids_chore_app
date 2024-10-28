@@ -18,6 +18,9 @@ def get_files_changed(repo_name, pr_number):
         "Accept": "application/vnd.github.v3+json"
     }
 
+    print(f"Fetching changed files for PR #{pr_number} in repository '{repo_name}'")
+    print(f"GitHub API URL: {url}")
+
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         changed_files = [file['filename'] for file in response.json() if file['filename'].endswith('.dart')]
@@ -69,6 +72,13 @@ def main():
 
     repo_name = sys.argv[1]
     pr_number = sys.argv[2]
+
+    # Print repository and PR details for debugging
+    pr_url = f"https://github.com/{repo_name}/pull/{pr_number}"
+    print(f"Repository: {repo_name}")
+    print(f"PR Number: {pr_number}")
+    print(f"PR URL: {pr_url}")
+
     changed_files = get_files_changed(repo_name, pr_number)
 
     if not changed_files:
