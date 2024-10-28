@@ -1,10 +1,12 @@
 import os
 import requests
 import sys
+import openai  # Ensure this import is present
 
 # Configure OpenAI API key
-openai_api_key = os.getenv("OPENAI_API_KEY")
-github_token = os.getenv("PAT_TOKEN")  # Using the secret set in your GitHub Actions workflow
+openai.api_key = os.getenv("OPENAI_API_KEY")
+github_token = os.getenv("PAT_TOKEN")
+repo_name = os.getenv("GITHUB_REPOSITORY")
 
 def get_files_changed(repo_name, pr_number):
     """
@@ -18,8 +20,8 @@ def get_files_changed(repo_name, pr_number):
 
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
-        # Filter only Dart files
         changed_files = [file['filename'] for file in response.json() if file['filename'].endswith('.dart')]
+        print(f"Changed files: {changed_files}")  # Debugging info
         return changed_files
     else:
         print(f"Error fetching changed files: {response.status_code} - {response.text}")
@@ -38,7 +40,7 @@ def review_file(file_path):
                   f"Check for common Flutter pitfalls, performance considerations, and clean code practices. "
                   f"Provide suggestions for improvement if necessary:\n\n{code_content}")
 
-        # Simulate ChatGPT API call (replace with actual ChatGPT call using OpenAI's API)
+        # Call the OpenAI API and get the response
         response = openai.Completion.create(
             engine="text-davinci-003",
             prompt=prompt,
@@ -48,6 +50,7 @@ def review_file(file_path):
 
         # Extract review message from the response
         review_message = response.choices[0].text.strip()
+        print(f"Generated review message for {file_path}: {review_message}")  # Debugging info
         return review_message
 
     except Exception as e:
@@ -78,8 +81,9 @@ def main():
     # Print review message for debugging purposes
     print("Generated review message:", review_message)
 
-    # Output review message for GitHub Action
-    print(f"::set-output name=review_message::{review_message}")
+    # Output review message for GitHub Action using environment files
+    with open(os.environ['GITHUB_ENV'], 'a') as env_file:
+        env_file.write(f"review_message={review_message}\n")
 
 if __name__ == "__main__":
     main()
