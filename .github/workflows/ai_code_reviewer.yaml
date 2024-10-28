@@ -58,5 +58,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           message: |
             🧠 **Automated Review with Cohere Suggestions**
-            A detailed review has been generated for the changed files. 
-            You can [download the review file here](https://github.com/${{ github.repository }}/actions/artifacts/${{ env.ARTIFACT_ID }}).
+            A detailed review has been generated for the changed files.
+            You can [download the review file here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ env.ARTIFACT_ID }}).
