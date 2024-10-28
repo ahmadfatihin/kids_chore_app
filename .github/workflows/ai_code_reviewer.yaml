@@ -36,7 +36,7 @@ jobs:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
 
       - name: Upload Review as Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: code-review
           path: code_review.txt
@@ -48,4 +48,5 @@ jobs:
           message: |
             🧠 **Automated Review with Cohere Suggestions**
             A detailed review has been generated for the changed files. 
-            You can [download the review file here](${{ steps.upload-artifact.outputs.artifact-name }}).
+            You can [download the review file from the Actions tab](${{
+              github.server_url }}/{{ github.repository }}/actions/runs/${{ github.run_id }}).
