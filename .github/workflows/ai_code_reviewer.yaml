@@ -19,9 +19,9 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Install Requests Library
+      - name: Install Dependencies
         run: |
-          pip install requests
+          pip install requests openai
 
       - name: Get PR Information
         id: get_info
