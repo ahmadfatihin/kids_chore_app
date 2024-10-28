@@ -16,49 +16,62 @@ class RewardScreen extends StatelessWidget {
       'Steam Wallet'
     ];
     return Scaffold(
+      backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
-        child: const Icon(Icons.add),
+        onPressed: () {
+          print('Button Pressed');
+        },
+        child: Icon(Icons.add, size: 40),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset('assets/images/bg_reward.png'),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'List',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                ),
-                ListView(
-                  shrinkWrap: true,
-                  children: List.generate(
-                    list.length,
-                    (index) => Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(255, 242, 194, 0.7),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Text('${index + 1}.'),
-                          const SizedBox(width: 10),
-                          Text(list[index]),
-                        ],
-                      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Image.asset(
+              'assets/images/bg_reward.png',
+              width: 200,
+              height: 150,
+            ),
+            Container(
+              color: Colors.grey.withOpacity(0.3),
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: const Text(
+                      'Reward List',
+                      style: TextStyle(fontSize: 25),
                     ),
                   ),
-                )
-              ],
+                  SizedBox(height: 20),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: list.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        padding: EdgeInsets.all(20),
+                        color: index.isEven
+                            ? Colors.blueAccent.withOpacity(0.2)
+                            : Colors.redAccent.withOpacity(0.2),
+                        child: Row(
+                          children: [
+                            Text('$index'),
+                            SizedBox(width: 5),
+                            Text(list[index]),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
