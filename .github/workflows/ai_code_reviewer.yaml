@@ -30,7 +30,7 @@ jobs:
       - name: Run Cohere Review Script
         id: cohere_review
         run: |
-          python3 review_with_cohere.py ${{ env.REPO_NAME }} ${{ env.PR_NUMBER }}
+          python3 review_with_chatgpt.py ${{ env.REPO_NAME }} ${{ env.PR_NUMBER }}
         env:
           COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
@@ -47,5 +47,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           message: |
             🧠 **Automated Review with Cohere Suggestions**
-            A detailed review has been generated for the changed files. Please download the review from the following link:
-            - [Download Code Review](./artifacts/code-review/code_review.txt)
+            A detailed review has been generated for the changed files. 
+            You can [download the review file here](${{ steps.upload-artifact.outputs.artifact-name }}).
