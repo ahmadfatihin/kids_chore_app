@@ -35,11 +35,17 @@ jobs:
           COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
 
-      - name: Post Cohere Review to Pull Request
-        if: ${{ env.review_message != '' }}
+      - name: Upload Review as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-review
+          path: code_review.txt
+
+      - name: Post Comment with Artifact Link
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           message: |
             🧠 **Automated Review with Cohere Suggestions**
-            ${{ env.review_message }}
+            A detailed review has been generated for the changed files. Please download the review from the following link:
+            - [Download Code Review](./artifacts/code-review/code_review.txt)

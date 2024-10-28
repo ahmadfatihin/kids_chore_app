@@ -57,20 +57,20 @@ def review_file(file_path):
         # Extract review message from the response
         review_message = response.generations[0].text.strip()
 
-        # Final message formatting to ensure it is clean and simple
-        formatted_review_message = f"### Review for `{file_path}`\n\n{review_message}"
+        # Save the review message to a text file
+        with open("code_review.txt", "w") as review_file:
+            review_file.write(f"Review for `{file_path}`\n\n{review_message}")
 
-        print(f"Generated review message for {file_path}:\n{formatted_review_message}")
-        return formatted_review_message
+        print(f"Review saved to 'code_review.txt' for file: {file_path}")
+        return review_message
 
     except Exception as e:
         print(f"Error reading or reviewing file {file_path}: {str(e)}")
         return f"Error reading or reviewing file {file_path}: {str(e)}"
 
-
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python3 review_with_cohere.py <repo_name> <pr_number>")
+        print("Usage: python3 review_with_chatgpt.py <repo_name> <pr_number>")
         sys.exit(1)
 
     repo_name = sys.argv[1]
@@ -89,25 +89,11 @@ def main():
         print("No Dart files changed in this PR.")
         return
 
-    review_comments = []
-
-    # Review each changed file
     for file in changed_files:
-        review_comment = review_file(file)
-        review_comments.append(f"### Review for `{file}`\n{review_comment}\n\n")
+        review_file(file)
 
-    # Prepare review message output for GitHub Action
-    review_message = "\n".join(review_comments)
-
-    # Print review message for debugging purposes
-    print("Generated review message:", review_message)
-
-    # Sanitize the output to avoid special characters that may break the GITHUB_ENV file processing
-    safe_review_message = review_message.replace('\n', ' ').replace('\r', '')
-
-    # Output review message for GitHub Action using environment files
-    with open(os.environ['GITHUB_ENV'], 'a') as env_file:
-        env_file.write(f"review_message={safe_review_message}\n")
+    print("Review files saved to 'code_review.txt'.")
 
 if __name__ == "__main__":
     main()
+
