@@ -21,7 +21,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-        pip install requests openai==0.28.0
+          pip install requests openai==0.28.0
 
       - name: Get PR Information
         id: get_info
