@@ -11,7 +11,6 @@ class RewardScreen extends StatelessWidget {
       'Money - 100 USD',
       'Money - 50 USD',
       'Money - 30 USD',
-      'Money - 10 USD',
       'Snack',
       'Company stock 1000 units',
       'Steam Wallet'

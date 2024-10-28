@@ -1,7 +1,7 @@
 import os
 import requests
 import sys
-import openai  # Ensure this import is present
+import openai
 
 # Configure OpenAI API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -40,16 +40,17 @@ def review_file(file_path):
                   f"Check for common Flutter pitfalls, performance considerations, and clean code practices. "
                   f"Provide suggestions for improvement if necessary:\n\n{code_content}")
 
-        # Call the OpenAI API and get the response
-        response = openai.Completion.create(
-            engine="text-davinci-003",
-            prompt=prompt,
-            max_tokens=150,
-            temperature=0.7
+        # Call the OpenAI API with the new format
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a code reviewer specialized in Flutter development."},
+                {"role": "user", "content": prompt}
+            ]
         )
 
         # Extract review message from the response
-        review_message = response.choices[0].text.strip()
+        review_message = response['choices'][0]['message']['content'].strip()
         print(f"Generated review message for {file_path}: {review_message}")  # Debugging info
         return review_message
 
