@@ -1,12 +1,15 @@
 import os
 import requests
 import sys
-import openai
+import cohere
 
-# Configure OpenAI API key
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Configure Cohere API key
+cohere_api_key = os.getenv("COHERE_API_KEY")
 github_token = os.getenv("PAT_TOKEN")
 repo_name = os.getenv("GITHUB_REPOSITORY")
+
+# Initialize Cohere client
+co = cohere.Client(cohere_api_key)
 
 def get_files_changed(repo_name, pr_number):
     """
@@ -18,13 +21,12 @@ def get_files_changed(repo_name, pr_number):
         "Accept": "application/vnd.github.v3+json"
     }
 
-    print(f"Fetching changed files for PR #{pr_number} in repository '{repo_name}'")
-    print(f"GitHub API URL: {url}")
-
+    print(f"Fetching changed files from PR #{pr_number} in repository '{repo_name}'")
     response = requests.get(url, headers=headers)
+
     if response.status_code == 200:
         changed_files = [file['filename'] for file in response.json() if file['filename'].endswith('.dart')]
-        print(f"Changed files: {changed_files}")  # Log changed files for debugging
+        print(f"Changed files: {changed_files}")
         return changed_files
     else:
         print(f"Error fetching changed files: {response.status_code} - {response.text}")
@@ -32,53 +34,48 @@ def get_files_changed(repo_name, pr_number):
 
 def review_file(file_path):
     """
-    Generate a review for a Dart file, focusing on Flutter-specific aspects.
+    Generate a review for a Dart file, focusing on Flutter-specific aspects using Cohere.
     """
     try:
         with open(file_path, 'r') as file:
             code_content = file.read()
 
-        # Create a prompt for ChatGPT to review the Flutter code
+        # Create a prompt for Cohere to review the Flutter code
         prompt = (f"Review this Flutter code for readability, architecture, and potential improvements. "
                   f"Check for common Flutter pitfalls, performance considerations, and clean code practices. "
                   f"Provide suggestions for improvement if necessary:\n\n{code_content}")
 
-        # Call the OpenAI API with the new format
-        try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "You are a code reviewer specialized in Flutter development."},
-                    {"role": "user", "content": prompt}
-                ]
-            )
+        # Call the Cohere API
+        response = co.generate(
+            model='command-xlarge',  # You can adjust the model as per your plan or available free model
+            prompt=prompt,
+            max_tokens=150
+        )
 
-            # Extract review message from the response
-            review_message = response['choices'][0]['message']['content'].strip()
-            print(f"Generated review message for {file_path}: {review_message}")  # Debugging info
-            return review_message
-
-        except openai.error.OpenAIError as e:
-            # Check for specific quota errors or other issues
-            return f"Error reviewing file {file_path}: {str(e)}"
+        # Extract review message from the response
+        review_message = response.generations[0].text.strip()
+        print(f"Generated review message for {file_path}: {review_message}")
+        return review_message
 
     except Exception as e:
+        print(f"Error reading or reviewing file {file_path}: {str(e)}")
         return f"Error reading or reviewing file {file_path}: {str(e)}"
 
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python3 review_with_chatgpt.py <repo_name> <pr_number>")
+        print("Usage: python3 review_with_cohere.py <repo_name> <pr_number>")
         sys.exit(1)
 
     repo_name = sys.argv[1]
     pr_number = sys.argv[2]
 
-    # Print repository and PR details for debugging
-    pr_url = f"https://github.com/{repo_name}/pull/{pr_number}"
+    # Print the PR commit link for better context
+    pr_commit_link = f"https://github.com/{repo_name}/pull/{pr_number}/commits"
     print(f"Repository: {repo_name}")
-    print(f"PR Number: {pr_number}")
-    print(f"PR URL: {pr_url}")
+    print(f"Pull Request Number: {pr_number}")
+    print(f"PR Commit Link: {pr_commit_link}")
 
+    # Fetch changed files
     changed_files = get_files_changed(repo_name, pr_number)
 
     if not changed_files:
@@ -87,6 +84,7 @@ def main():
 
     review_comments = []
 
+    # Review each changed file
     for file in changed_files:
         review_comment = review_file(file)
         review_comments.append(f"### Review for `{file}`\n{review_comment}\n\n")

@@ -1,5 +1,3 @@
-# .github/workflows/pr_review.yml
-
 name: PR Code Review
 
 on:
@@ -21,7 +19,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install requests openai==0.28.0
+          pip install requests cohere
 
       - name: Get PR Information
         id: get_info
@@ -29,18 +27,19 @@ jobs:
           echo "REPO_NAME=${{ github.repository }}" >> $GITHUB_ENV
           echo "PR_NUMBER=${{ github.event.number }}" >> $GITHUB_ENV
 
-      - name: Run ChatGPT Review Script
-        id: chatgpt_review
+      - name: Run Cohere Review Script
+        id: cohere_review
         run: |
-          python3 review_with_chatgpt.py ${{ env.REPO_NAME }} ${{ env.PR_NUMBER }}
+          python3 review_with_cohere.py ${{ env.REPO_NAME }} ${{ env.PR_NUMBER }}
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
 
-      - name: Post ChatGPT Review to Pull Request
+      - name: Post Cohere Review to Pull Request
+        if: success() && steps.cohere_review.outputs.review_message != ''
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           message: |
-            🧠 **Automated Review with ChatGPT Suggestions**
-            ${{ steps.chatgpt_review.outputs.review_message }}
+            🧠 **Automated Review with Cohere Suggestions**
+            ${{ steps.cohere_review.outputs.review_message }}
