@@ -18,14 +18,14 @@ class RewardScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: const Color.fromRGBO(155, 195, 255, 1),
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add_box_outlined),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset('assets/images/bg_reward.png'),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
