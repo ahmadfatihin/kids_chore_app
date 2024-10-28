@@ -40,10 +40,12 @@ def review_file(file_path):
         with open(file_path, 'r') as file:
             code_content = file.read()
 
-        # Create a prompt for Cohere to review the Flutter code
-        prompt = (f"Review this Flutter code for readability, architecture, and potential improvements. "
-                  f"Check for common Flutter pitfalls, performance considerations, and clean code practices. "
-                  f"Provide suggestions for improvement if necessary:\n\n{code_content}")
+        # Create a refined prompt for Cohere to review the Flutter code concisely
+        prompt = (
+            f"Please review the following Flutter code and provide a concise and clear summary in a single paragraph. "
+            f"Focus on readability, common mistakes, and potential improvements. If everything looks good, mention that as well. "
+            f"Keep your response short and in a conversational tone:\n\n{code_content}"
+        )
 
         # Call the Cohere API
         response = co.generate(
@@ -54,12 +56,17 @@ def review_file(file_path):
 
         # Extract review message from the response
         review_message = response.generations[0].text.strip()
-        print(f"Generated review message for {file_path}: {review_message}")
-        return review_message
+
+        # Final message formatting to ensure it is clean and simple
+        formatted_review_message = f"### Review for `{file_path}`\n\n{review_message}"
+
+        print(f"Generated review message for {file_path}:\n{formatted_review_message}")
+        return formatted_review_message
 
     except Exception as e:
         print(f"Error reading or reviewing file {file_path}: {str(e)}")
         return f"Error reading or reviewing file {file_path}: {str(e)}"
+
 
 def main():
     if len(sys.argv) != 3:
