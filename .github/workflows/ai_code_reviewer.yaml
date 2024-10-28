@@ -19,6 +19,10 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Install Requests Library
+        run: |
+          pip install requests
+
       - name: Get PR Information
         id: get_info
         run: |
@@ -36,7 +40,7 @@ jobs:
       - name: Post ChatGPT Review to Pull Request
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           body: |
             🧠 **Automated Review with ChatGPT Suggestions**
             ${{ steps.chatgpt_review.outputs.review_message }}
