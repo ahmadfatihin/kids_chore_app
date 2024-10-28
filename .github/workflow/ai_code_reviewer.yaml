@@ -1,0 +1,42 @@
+# .github/workflows/pr_review.yml
+
+name: PR Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  automated-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Get PR Information
+        id: get_info
+        run: |
+          echo "REPO_NAME=${{ github.repository }}" >> $GITHUB_ENV
+          echo "PR_NUMBER=${{ github.event.number }}" >> $GITHUB_ENV
+
+      - name: Run ChatGPT Review Script
+        id: chatgpt_review
+        run: |
+          python3 review_with_chatgpt.py ${{ env.REPO_NAME }} ${{ env.PR_NUMBER }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+      - name: Post ChatGPT Review to Pull Request
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          body: |
+            🧠 **Automated Review with ChatGPT Suggestions**
+            ${{ steps.chatgpt_review.outputs.review_message }}
