@@ -21,7 +21,7 @@ def get_files_changed(repo_name, pr_number):
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         changed_files = [file['filename'] for file in response.json() if file['filename'].endswith('.dart')]
-        print(f"Changed files: {changed_files}")  # Debugging info
+        print(f"Changed files: {changed_files}")  # Log changed files for debugging
         return changed_files
     else:
         print(f"Error fetching changed files: {response.status_code} - {response.text}")
@@ -41,18 +41,23 @@ def review_file(file_path):
                   f"Provide suggestions for improvement if necessary:\n\n{code_content}")
 
         # Call the OpenAI API with the new format
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a code reviewer specialized in Flutter development."},
-                {"role": "user", "content": prompt}
-            ]
-        )
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a code reviewer specialized in Flutter development."},
+                    {"role": "user", "content": prompt}
+                ]
+            )
 
-        # Extract review message from the response
-        review_message = response['choices'][0]['message']['content'].strip()
-        print(f"Generated review message for {file_path}: {review_message}")  # Debugging info
-        return review_message
+            # Extract review message from the response
+            review_message = response['choices'][0]['message']['content'].strip()
+            print(f"Generated review message for {file_path}: {review_message}")  # Debugging info
+            return review_message
+
+        except openai.error.OpenAIError as e:
+            # Check for specific quota errors or other issues
+            return f"Error reviewing file {file_path}: {str(e)}"
 
     except Exception as e:
         return f"Error reading or reviewing file {file_path}: {str(e)}"
@@ -82,9 +87,12 @@ def main():
     # Print review message for debugging purposes
     print("Generated review message:", review_message)
 
+    # Sanitize the output to avoid special characters that may break the GITHUB_ENV file processing
+    safe_review_message = review_message.replace('\n', ' ').replace('\r', '')
+
     # Output review message for GitHub Action using environment files
     with open(os.environ['GITHUB_ENV'], 'a') as env_file:
-        env_file.write(f"review_message={review_message}\n")
+        env_file.write(f"review_message={safe_review_message}\n")
 
 if __name__ == "__main__":
     main()
