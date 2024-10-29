@@ -1,0 +1,62 @@
+name: PR Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  automated-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install Dependencies
+        run: |
+          pip install requests cohere
+
+      - name: Get PR Information
+        id: get_info
+        run: |
+          echo "REPO_NAME=${{ github.repository }}" >> $GITHUB_ENV
+          echo "PR_NUMBER=${{ github.event.number }}" >> $GITHUB_ENV
+
+      - name: Run Cohere Review Script
+        id: cohere_review
+        run: |
+          python3 review_with_cohere.py ${{ env.REPO_NAME }} ${{ env.PR_NUMBER }}
+        env:
+          COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+      - name: Upload Review as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-review
+          path: code_review.txt
+
+      - name: Get Artifact ID using GitHub API
+        id: get_artifact_id
+        run: |
+          artifact_id=$(curl -s \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}"\
+            https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts \
+            | jq -r '.artifacts[] | select(.name == "code-review") | .id')
+
+          echo "ARTIFACT_ID=$artifact_id" >> $GITHUB_ENV
+
+      - name: Post Comment with Artifact Link
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          message: |
+            🧠 **Automated Review with Cohere Suggestions**
+            A detailed review has been generated for the changed files.
+            You can [download the review file here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ env.ARTIFACT_ID }}).
